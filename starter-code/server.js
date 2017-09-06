@@ -8,7 +8,7 @@ const requestProxy = require('express-request-proxy'); // REVIEW: We've added a 
 const PORT = process.env.PORT || 3000;
 const app = express();
 // const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
-const conString = ''; // TODO: Don't forget to set your own conString
+const conString = 'postgres://hanhthaoluu@localhost:5432/kilovolt'; // TODO: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => console.error(err));
@@ -19,7 +19,7 @@ app.use(express.static('./public'));
 
 
 // COMMENT: What is this function doing? Why do we need it? Where does it receive a request from?
-// (put your response in a comment here)
+// (put your response in a comment here)///This proxy method acts as a 'middle man' (middleware) for this request.  This function is needed so that I can safely store my gitHub token inside the environment variable; Inside the repos.js there is this function     $.get('/github/user/repos') inside the repos.requestRepos////this is where the request being made from/////the request is being made from repos.js/////
 function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
@@ -30,7 +30,10 @@ function proxyGitHub(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// (put your response in a comment here:
+//////app.get('/github/*', proxyGitHub); = this route is telling the server when it receives request for this catchall /github/*  then run the function called proxyGitHub;
+/////the route receives the request from $.get('/github/user/repos') inside the repos.requestRepos from the repo.js , which is running from the browser);
+/////app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'})); = the client is telling the server to get info from /new; then server would respond by sending the file new.html from the public folder;
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/github/*', proxyGitHub);
