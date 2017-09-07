@@ -14,12 +14,15 @@ var app = app || {};
   // REVIEW: With ES6 arrow functions, if the function only has one parameter, you don't need parentheses.
   //         This is similar to saying Article.loadAll = function(rows).
     // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+// this function sorts items in the row array based on the date it was published on, then takes rows and creates new article objects for each index.
+//.sort and .map are higher order functions native to javascript. IT's called in articleController, routes.js, and article.js below.
   Article.loadAll = rows => {
     rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
     Article.all = rows.map(ele => new Article(ele));
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+// This performs a gget request on /articles then passes the result into the loadAll method declared above. It's called in articleController.js and adminView.js.
   Article.fetchAll = callback => {
     $.get('/articles')
     .then(
@@ -55,6 +58,9 @@ var app = app || {};
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+// this function calculates the number of words each author has contributed to the blog. It uses REGEX and some higher order functions to filer and sort the data into an array of objects.
+// allAuthors is declared below in article.js. The other functons are native to javascript.
+// this function is called article.js and adminView.js.
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
       return {
@@ -75,6 +81,8 @@ var app = app || {};
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //this function requests information from /articles, console logs the result, and runs the callback.
+  // it's called in article.js.
   Article.truncateTable = callback => {
     $.ajax({
       url: '/articles',
