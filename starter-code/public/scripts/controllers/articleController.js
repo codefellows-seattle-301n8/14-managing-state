@@ -5,7 +5,7 @@ var app = app || {};
   const articleController = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
-  // (put your response in a comment here)
+  // What function? This comment is below an object within an IFFE. It's called here, which means it's immediatel invoked.
   articleController.index = (ctx) => app.articleView.index(ctx.articles);
 
   // REVIEW: Middleware for grabbing one article by ID:
@@ -16,7 +16,7 @@ var app = app || {};
     };
 
     // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
-    // (put your response in a comment here)
+    // findWhere, declared in article.js takes a field, value and a callback as parameters. It then runs a .get() request on /articles/find and passes on object containing field: field, and val: value.
     app.Article.findWhere('article_id', ctx.params.article_id, articleData);
   };
 
