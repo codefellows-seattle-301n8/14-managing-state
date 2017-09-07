@@ -14,12 +14,14 @@ var app = app || {};
   // REVIEW: With ES6 arrow functions, if the function only has one parameter, you don't need parentheses.
   //         This is similar to saying Article.loadAll = function(rows).
     // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+    // This function takes a parameter that is an array, and it then takes that array and sorts it based on the most recent article first. Once that is done, each article is then passed into our Article Constructor Function and makes the article have all the corresponding methods. This function is then called in the Article.fetchAll function right below.
   Article.loadAll = rows => {
     rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
     Article.all = rows.map(ele => new Article(ele));
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // this function is doing a .get request to our server.js which in turn goes and takes everything from our articles and authors tables and sends the results back to this function.  when that is received .then runs and we pass in that array of data into the Article.loadAll functino described above.
   Article.fetchAll = callback => {
     $.get('/articles')
     .then(
@@ -55,6 +57,7 @@ var app = app || {};
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // we are using the Articles.allAuthors array we found above (which has unique author names only in it), and then mapping that array into a series of objects, with the first property being name: author,  and the second being numWords: (all the words written by that author which we find using some fancy fancy regex expressions)
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
       return {
@@ -75,6 +78,7 @@ var app = app || {};
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // this is an ajax request that relates to the Delete in CRUD. It will delete the entire table from our sql database
   Article.truncateTable = callback => {
     $.ajax({
       url: '/articles',
