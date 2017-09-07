@@ -5,7 +5,7 @@ var app = app || {};
   const articleController = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
-  // (put your response in a comment here)
+  // This function is called quite a few times in routes.js ctx.articles is defined by the function that is called before it in the route. And will load information based on that function.
   articleController.index = (ctx) => app.articleView.index(ctx.articles);
 
   // REVIEW: Middleware for grabbing one article by ID:
@@ -16,7 +16,7 @@ var app = app || {};
     };
 
     // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
-    // (put your response in a comment here)
+    // This function is allowing the user to sort articles based on a specified piece of information, depends on what is being passed in. the function lives in the "article.js" file.
     app.Article.findWhere('article_id', ctx.params.article_id, articleData);
   };
 
