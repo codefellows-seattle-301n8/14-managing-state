@@ -5,6 +5,8 @@ var app = app || {};
   const articleView = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+
+  // this function compiles our Handlebars template. It calls Handlebars.compile which comes from the Handlebars api. The funcion also runs parseInt which is a native JS function. The marked function is markdown parser and compiler and lives in the marked.js file.
   const render = function(article) {
     let template = Handlebars.compile($('#article-template').text());
 
