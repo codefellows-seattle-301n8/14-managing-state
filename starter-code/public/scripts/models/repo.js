@@ -6,6 +6,7 @@ var app = app || {};
   repos.all = [];
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //This function is sending a request to the server for github repos.  Then when it gets the data back it puts it all in the repos.all array.  if there is an error it will log it.  then it will call the callback function.  This functin is being called in the aboutController.  The callback is repoview.index, which is in repoView.js.
   repos.requestRepos = function(callback) {
     $.get('/github/user/repos')
     .then(data => repos.all = data, err => console.error(err))
