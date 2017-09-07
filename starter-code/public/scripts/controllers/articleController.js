@@ -16,7 +16,7 @@ var app = app || {};
     };
 
     // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
-    // (put your response in a comment here)
+    //  we run the Article.findWhere function which is defined in the article.js file, and we pass into it three parameters. these parameters allow us to grab a subset of articles, and the third one is a callback function that is ran at the end
     app.Article.findWhere('article_id', ctx.params.article_id, articleData);
   };
 
