@@ -5,6 +5,7 @@ var app = app || {};
   const newArticle = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  ////////newArticle.initNewArticlePage is being defined below, allowing the ability to submit and create a new article, hide the html element with class of tab-content and hide the export-field.  This function is being called at the very end, inside this iffe function.
   newArticle.initNewArticlePage = function() {
     $('.tab-content').show();
     $('#export-field').hide();
