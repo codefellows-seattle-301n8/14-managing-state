@@ -13,4 +13,5 @@ page('/author/:authorName', app.articleController.loadByAuthor, app.articleContr
 page('/category/:categoryName', app.articleController.loadByCategory, app.articleController.index);
 
 // COMMENT: What is this function doing?
+//The function, page(), is being called to set up the ability to call the corresponding functions per each route that is controlled by the page.js library. Without running the page() function, everything blows up...ie, nothing is called.
 page();

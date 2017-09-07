@@ -19,7 +19,7 @@ app.use(express.static('./public'));
 
 
 // COMMENT: What is this function doing? Why do we need it? Where does it receive a request from?
-// (put your response in a comment here)
+// this is the function that is run when we receive an incoming route to /github/*  -  this function takes care of our API call to github, it uses our github token which is stored in an environment variable
 function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
@@ -30,7 +30,7 @@ function proxyGitHub(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// each of the following 3 lines are listening for incoming routes to their respective pages, and in the first two cases the response will be serving up the corresponding page from our public folder, while the third one will run the function described above to get our github repos
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/github/*', proxyGitHub);
@@ -107,7 +107,7 @@ app.post('/articles', function(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// this function is an incoming route from the article.js file, and what is does is it takes the incoming "request" information and uses it to update the corresponding author in our sql database. it knows which author to uupdate based on the :id portion at the end of the route.  
 app.put('/articles/:id', (request, response) => {
   client.query(`
     UPDATE authors
