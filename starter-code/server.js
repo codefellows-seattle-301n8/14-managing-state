@@ -19,7 +19,7 @@ app.use(express.static('./public'));
 
 
 // COMMENT: What is this function doing? Why do we need it? Where does it receive a request from?
-// (put your response in a comment here)
+// ANSWER: declaring a function to ping the github API for a repo list.
 function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
@@ -30,7 +30,7 @@ function proxyGitHub(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// ANSWER: If a user visits localhost:1234/new or admin, we are sending the html files in return for the browser to render. github one is calling the proxyGitHub function above for information and returning it to wherever the request is being called from.
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/github/*', proxyGitHub);
@@ -107,7 +107,7 @@ app.post('/articles', function(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// Takes the :id value from the put request and uses it to update the database with the request.body data. Comes from Article.prototype.updateRecord in article.js file.
 app.put('/articles/:id', (request, response) => {
   client.query(`
     UPDATE authors
