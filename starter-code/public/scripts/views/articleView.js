@@ -5,6 +5,7 @@ var app = app || {};
   const articleView = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  //////This function defines the function called template, which is a Handlebars compiler.  It finds and compiles all the text inside the html element of the id of article-template.   article.daysAgo calculates how many days ago an article has been published.  article.publishStatus checks to see if an article has been published, if not then gives it a draft value.   marked converts markdown format into html format to append to the DOM.
   const render = function(article) {
     let template = Handlebars.compile($('#article-template').text());
 
