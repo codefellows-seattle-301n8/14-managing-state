@@ -8,7 +8,7 @@ const requestProxy = require('express-request-proxy'); // REVIEW: We've added a 
 const PORT = process.env.PORT || 3000;
 const app = express();
 // const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
-const conString = ''; // TODO: Don't forget to set your own conString
+const conString = 'postgres://hanhthaoluu@localhost:5432/kilovolt'; // TODO: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => console.error(err));
@@ -19,7 +19,7 @@ app.use(express.static('./public'));
 
 
 // COMMENT: What is this function doing? Why do we need it? Where does it receive a request from?
-// (put your response in a comment here)
+// (put your response in a comment here)///This proxy method acts as a 'middle man' (middleware) for this request.  This function is needed so that I can safely store my gitHub token inside the environment variable; Inside the repos.js there is this function     $.get('/github/user/repos') inside the repos.requestRepos////this is where the request being made from/////the request is being made from repos.js/////
 function proxyGitHub(request, response) {
   console.log('Routing GitHub request for', request.params[0]);
   (requestProxy({
@@ -30,7 +30,10 @@ function proxyGitHub(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// (put your response in a comment here:
+//////app.get('/github/*', proxyGitHub); = this route is telling the server when it receives request for this catchall /github/*  then run the function called proxyGitHub;
+/////the route receives the request from $.get('/github/user/repos') inside the repos.requestRepos from the repo.js , which is running from the browser);
+/////app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'})); = the client is telling the server to get info from /new; then server would respond by sending the file new.html from the public folder;
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/github/*', proxyGitHub);
@@ -107,7 +110,10 @@ app.post('/articles', function(request, response) {
 
 
 // COMMENT: What is this route doing? Where does it receive a request from?
-// (put your response in a comment here)
+// (put your response in a comment here) This is put request. app is the representation of the server express client. body is body parser. sql does not understand json so we use request.body to help sql understand the info format being sent over from the client.
+/////app.put() is not being called anywhere.  The below function is just setting up a route.  The url is /article/:id  (the article with this unique id). When this route is being hit, then the database would update the articles table and the authors table with the new info in the request array with each array item, starting with request.body.  Once the database successfully updated the tables then it would send a reponse back to the client, saying 'update complete'. If it cannot update the tables then .catch would console.error (which is essentially doing a console.log for the error).
+////The first client.query updates the authors table; where author_id equals to prime 3 or $3, set the author equal to $1 or prime 1.  $1 corresponds to request.body.author (from the array from the client request).  Update authorUrl to $2, which corresponds to request.body.authorUrl
+/////The second client.query updates the articles table.  Request.params.id where id comes from the url.  where article_id is equal to $6, set the author_id equal to $1, which corresponds to request.body.author_id......and so on.......
 app.put('/articles/:id', (request, response) => {
   client.query(`
     UPDATE authors
@@ -128,7 +134,7 @@ app.put('/articles/:id', (request, response) => {
         request.body.category,
         request.body.publishedOn,
         request.body.body,
-        request.params.id
+        request.params.id ///id comes from url, not from client//retrieve just one article
       ]
     )
   })
