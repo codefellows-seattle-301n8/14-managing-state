@@ -14,7 +14,7 @@ var app = app || {};
   const render = Handlebars.compile($('#repo-template').text());
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
-  ///////repoView.index is being defined below.  The first thing this function does is calling on the function ui();, which is defined above in this file.  The function ui empty the contents in the ul of the html element with an id of about. Then ui would show the section of about and hide all the siblings of the element with id of about. The second thing repoView.index does is that it finds the ul of the html element with id of about and it appends the repos to it
+  ///////repoView.index is being defined below.  The first thing this function does is calling on the function ui();, which is defined above in this file.  The function ui empty the contents in the ul of the html element with an id of about. Then ui would show the section of about and hide all the siblings of the element with id of about. The second thing repoView.index does is that it finds the ul of the html element with id of about and it appends the repos to it. It does the .map on all repos with the property of name. .map allows us to compile every repo in the repos array into the Handlebars template before being appended into the ul.
   repoView.index = function() {
     ui();
 
