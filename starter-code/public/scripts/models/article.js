@@ -14,12 +14,15 @@ var app = app || {};
   // REVIEW: With ES6 arrow functions, if the function only has one parameter, you don't need parentheses.
   //         This is similar to saying Article.loadAll = function(rows).
     // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+    // 'loadall' loads all articles that are in the constructor function (Article) and sorts them in descending order by the date publishedOn. .sort and .map are called as well. It's called in articleController.js.
+
   Article.loadAll = rows => {
     rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
     Article.all = rows.map(ele => new Article(ele));
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // 'fetchall' calls a get request and loads that into 'results' which is passed into 'loadall'.
   Article.fetchAll = callback => {
     $.get('/articles')
     .then(
@@ -55,6 +58,8 @@ var app = app || {};
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // 'numWordsByAuthor' adds all of the words in each article written by the author currently being reviewed. It uses .filter, .map, and .reduce to determine this. It lives in article.js and adminview.js.
+  
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
       return {
@@ -75,6 +80,7 @@ var app = app || {};
   };
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+  // 'truncateTable' deletes the table in '/articles' and console logs the value of callback. This lives in article.js.
   Article.truncateTable = callback => {
     $.ajax({
       url: '/articles',
