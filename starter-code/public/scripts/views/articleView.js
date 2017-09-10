@@ -5,6 +5,8 @@ var app = app || {};
   const articleView = {};
 
   // COMMENT: What is this function doing? Where is it called? Does it call any other functions, and if so, in what file(s) do those function(s) live?
+
+  //handlebars.complie compiles a stringified text of the articles. It takes the text and then runs parseInt to render the publishedOn info in date format. Lives in marked.js.
   const render = function(article) {
     let template = Handlebars.compile($('#article-template').text());
 
